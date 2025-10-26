@@ -1,41 +1,42 @@
 import { Link } from "react-router-dom";
 import logo from "../assests/images/SkillCarft.svg";
-
+import { useState } from "react";
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => setIsOpen(!isOpen);
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className="flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-white border-gray-200 dark:bg-gray-900  fixed top-0 left-0 right-0 z-50 shadow-md">
+      <div className="flex flex-wrap items-center justify-between mx-auto p-4 max-w-7xl">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src={logo} className="h-10 w-40 mr-4" alt="logo" />
+          <img src={logo} className="h-10 w-auto" alt="logo" />
         </Link>
 
-        <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse ">
+        <div className="flex md:order-2 gap-3 ">
           <button
             type="button"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            style={{ backgroundColor: "#5761FF" }}
+            className="text-white bg-[#5761FF] hover:bg-[#4a53e0] font-medium rounded-full text-sm px-5 py-2.5 focus:outline-none focus:ring-4 focus:ring-[#5761FF]/30 transition-all"
           >
             Sign In
           </button>
 
           <button
             type="button"
-            className="text-[#5761FF] hover:text-white border border-[#5761FF] hover:bg-[#7079fc] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-[#5761FF]dark:text-blue-500 dark:hover:text-white dark:hover:bg-[#5761FF] dark:focus:ring-[#4652fb]"
+            className="text-[#5761FF] border border-[#5761FF] hover:bg-[#5761FF] hover:text-white font-medium rounded-full text-sm px-5 py-2.5 transition-all"
           >
             Sign Up
           </button>
           <button
-            data-collapse-toggle="navbar-cta"
+            onClick={toggleNavbar}
             type="button"
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm 
                        text-gray-500 rounded-lg md:hidden hover:bg-gray-100 
-                       focus:outline-none focus:ring-2 focus:ring-gray-200 
-                       dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                       focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="navbar-cta"
-            aria-expanded="false"
+            aria-expanded={isOpen}
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -57,8 +58,10 @@ const Header = () => {
         </div>
 
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-cta"
+          className={`${
+            isOpen ? "block" : "hidden"
+          } w-full md:flex md:w-auto md:order-1 transition-all duration-300 ease-in-out`}
         >
           <ul
             className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 
@@ -66,59 +69,26 @@ const Header = () => {
                        md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 
                        md:dark:bg-gray-900 dark:border-gray-700"
           >
-            <li>
-              <a
-                href="#herosection"
-                className="block py-2 px-3 md:p-0 text-[#0E111E] bg-[#5761FF] rounded-sm 
-                           md:bg-transparent md:text-[#5761FF] md:dark:text-[#5761FF]"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#inspiration"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 
-                           md:hover:bg-transparent md:hover:text-[#5761FF] md:dark:hover:text-[#5761FF]
-                           dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
-                           md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Inspiration
-              </a>
-            </li>
-            <li>
-              <a
-                href="#course"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 
-                           md:hover:bg-transparent md:hover:text-[#5761FF] md:dark:hover:text-[#5761FF]
-                           dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
-                           md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Course
-              </a>
-            </li>
-            <li>
-              <a
-                href="#testimoni"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 
-                           md:hover:bg-transparent md:hover:text-[#5761FF] md:dark:hover:text-[#5761FF]
-                           dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
-                           md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Testimoni
-              </a>
-            </li>
-            <li>
-              <a
-                href="#faq"
-                className="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 
-                           md:hover:bg-transparent md:hover:text-[#5761FF] md:dark:hover:text-[#5761FF]
-                           dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
-                           md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                FAQ
-              </a>
-            </li>
+            {[
+              { href: "#herosection", label: "Home" },
+              { href: "#inspiration", label: "Inspiration" },
+              { href: "#course", label: "Course" },
+              { href: "#testimoni", label: "Testimoni" },
+              { href: "#faq", label: "FAQ" },
+            ].map((item, i) => (
+              <li key={i}>
+                <a
+                  href={item.href}
+                  onClick={() => setIsOpen(false)} // Tutup menu saat klik link
+                  className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 
+                             md:hover:bg-transparent md:hover:text-[#5761FF] 
+                             dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                             md:dark:hover:bg-transparent transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
