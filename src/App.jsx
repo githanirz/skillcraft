@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DetailCourse from "../pages/DetailCourse";
-import HomePage from "../pages/Homepage";
+import HomePage from "../pages/HomePage";
+
 function App() {
   return (
     <Router>
